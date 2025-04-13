@@ -14,3 +14,5 @@ pinned: false
 💙 *We care for you.*  
 Speak or type your mental health concern to receive personalized, AI-powered insights.  
 Download your diagnosis report or submit anonymous feedback — safely and securely.
+# SafeSpace-AI
+An AI-powered mental health assistant using Gradio and Pre-trained Gemma
