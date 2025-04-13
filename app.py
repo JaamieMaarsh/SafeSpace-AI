@@ -17,7 +17,7 @@ import torch
 import faiss
 import numpy as np
 import gradio as gr
-from google.colab import drive
+# from google.colab import drive
 from transformers import pipeline, AutoModelForCausalLM, AutoTokenizer
 from sentence_transformers import SentenceTransformer
 from peft import PeftModel
@@ -54,9 +54,9 @@ peft_model_path = "Jaamie/gemma-mental-health-qlora"
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 embedding_model_bge = "BAAI/bge-base-en-v1.5"
-save_path_bge = "/content/drive/MyDrive/models/bge-base-en-v1.5"
-faiss_index_path = "/content/qa_faiss_embedding.index"
-chunked_text_path = "/content/chunked_text_RAG_text.txt"
+#save_path_bge = "./models/bge-base-en-v1.5"
+faiss_index_path = "./qa_faiss_embedding.index"
+chunked_text_path = "./chunked_text_RAG_text.txt"
 READER_MODEL_NAME = "google/gemma-2-9b-it"
 log_file_path = "./diagnosis_logs.csv"
 feedback_file_path = "./feedback_logs.csv"
@@ -89,15 +89,18 @@ os.makedirs(save_path_bge, exist_ok=True)
 # -------------------------------
 
 # Load Sentence Transformer Model
-if not os.path.exists(os.path.join(save_path_bge, "config.json")):
-    print("Saving model to Google Drive...")
-    embedding_model = SentenceTransformer(embedding_model_bge)
-    embedding_model.save(save_path_bge)
-    print("Model saved successfully!")
-else:
-    print("Loading model from Google Drive...")
-    device = 'cuda' if torch.cuda.is_available() else 'cpu'
-    embedding_model = SentenceTransformer(save_path_bge, device=device)
+# if not os.path.exists(os.path.join(save_path_bge, "config.json")):
+#     print("Saving model to Google Drive...")
+#     embedding_model = SentenceTransformer(embedding_model_bge)
+#     embedding_model.save(save_path_bge)
+#     print("Model saved successfully!")
+# else:
+#     print("Loading model from Google Drive...")
+#     device = 'cuda' if torch.cuda.is_available() else 'cpu'
+#     embedding_model = SentenceTransformer(save_path_bge, device=device)
+
+embedding_model = SentenceTransformer(embedding_model_bge, device=device)
+print("✅ BGE Embedding model loaded from Hugging Face.")
 
 # Load FAISS Index
 faiss_index = faiss.read_index(faiss_index_path)
